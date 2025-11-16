@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import { useAuth } from '@/contexts/AuthContext';
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import { useAuth } from "@/contexts/AuthContext";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const {
@@ -18,25 +18,25 @@ export default function LoginPage() {
     isAuthenticated,
     isLoading: authLoading,
   } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // Check for error in URL params (from OAuth callback)
   useEffect(() => {
-    const errorParam = searchParams.get('error');
+    const errorParam = searchParams.get("error");
     if (errorParam) {
       setError(errorParam);
       // Clean URL
-      router.replace('/login');
+      router.replace("/login");
     }
   }, [searchParams, router]);
 
   // Redirect if already authenticated
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
-      router.push('/');
+      router.push("/");
     }
   }, [isAuthenticated, authLoading, router]);
 
@@ -51,7 +51,7 @@ export default function LoginPage() {
       router.refresh();
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : 'Login failed. Please try again.'
+        err instanceof Error ? err.message : "Login failed. Please try again."
       );
       setIsLoading(false);
     }
@@ -66,7 +66,11 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div className="flex items-center justify-between">
           <Link href="/">
-            <Button variant="text" size="sm" className="flex items-center gap-2">
+            <Button
+              variant="text"
+              size="sm"
+              className="flex items-center gap-2"
+            >
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -136,7 +140,7 @@ export default function LoginPage() {
                 className="w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign in'}
+                {isLoading ? "Signing in..." : "Sign in"}
               </Button>
             </div>
           </form>
@@ -154,7 +158,12 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-6">
-              <Button type="button" variant="text" className="w-full" onClick={handleGoogleLogin}>
+              <Button
+                type="button"
+                variant="text"
+                className="w-full"
+                onClick={handleGoogleLogin}
+              >
                 <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                   <path
                     fill="#4285F4"
@@ -179,7 +188,7 @@ export default function LoginPage() {
           </div>
 
           <p className="mt-6 text-center text-sm text-text-muted">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
               className="font-medium text-primary hover:text-primary-dark"
@@ -190,5 +199,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background-light flex items-center justify-center">
+          <div className="text-text-muted">Loading...</div>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
