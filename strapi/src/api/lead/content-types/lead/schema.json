@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leads",
+  "info": {
+    "singularName": "lead",
+    "pluralName": "leads",
+    "displayName": "Leads",
+    "description": "Lead management for dashboard"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "company": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "user_status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Active",
+      "enum": [
+        "Active",
+        "Inactive"
+      ]
+    }
+  }
+}

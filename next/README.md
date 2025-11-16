@@ -1,45 +1,48 @@
-# 🌟 Next.js Multilingual Blog Template
+# Dashboard - Next.js Frontend
 
-Welcome to our cutting-edge Next.js Multilingual Blog Template! This powerful and flexible template is designed to help you create stunning, multilingual blogs with ease.
+A simple dashboard application for managing leads, built with Next.js and TypeScript.
 
-## ✨ Features
+## Features
 
-- 🌐 Multilingual support (English and French)
-- 📱 Fully responsive design
-- 🎨 Customizable themes
-- 🖼️ Image optimization
-- 🔍 SEO-friendly
-- 🚀 Fast performance with Next.js
+- View leads in a table format (Name, Company, Email, Status)
+- Filter leads by status (Active/Inactive)
+- Add new leads via modal
+- Update existing leads
+- Integration with Strapi API
 
-## 🚀 Getting Started
+## Getting Started
 
-1. Clone this repository
-2. Install dependencies: `npm install`
-3. Copy `.env.example` to `.env.local` and update the variables
-4. Run the development server: `npm run dev`
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+1. Install dependencies:
+```bash
+yarn install
+# or
+npm install
+```
 
-## 🛠️ Customization
+2. Create `.env.local` file with:
+```
+NEXT_PUBLIC_API_URL=http://localhost:1337
+```
 
-- Modify `config.ts` to change language settings
-- Update `next.config.mjs` for advanced configurations
-- Add your own MDX files in the `blog` page directly
+3. Run the development server:
+```bash
+yarn dev
+# or
+npm run dev
+```
 
-## 🤝 Contributing
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-We welcome contributions! Please see our [contributing guidelines](link-to-contributing-guidelines) for more information.
+## Project Structure
 
-## 📄 License
+- `app/page.tsx` - Main dashboard page
+- `components/leads/` - Lead-related components (Table, Modal, Filter)
+- `lib/api/leads.ts` - API functions for Strapi integration
+- `types/lead.ts` - TypeScript types for Lead entities
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## API Integration
 
----
-
-<footer>
-<p align="center">
-  Made by <a href="https://aceternity.com">Aceternity</a><br>
-  Powered by <a href="https://nextjs.org/">Next.js</a> | <a href="https://tailwindcss.com/">Tailwind CSS</a> | <a href="https://framer.com/motion">Framer Motion</a> | <a href="https://ui.aceternity.com">Aceternity UI</a>
-</p>
-</footer>
-
-++ Deploy
+The application connects to Strapi backend API:
+- `GET /api/leads` - Fetch all leads
+- `POST /api/leads` - Create a new lead
+- `PUT /api/leads/:id` - Update a lead

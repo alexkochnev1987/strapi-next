@@ -1,24 +1,163 @@
-@import './prism.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --foreground-rgb: 255, 255, 255;
+@theme {
+  /* LeadBlocks color palette */
+  --color-primary: #dc3044;
+  --color-primary-light: #E31E24;
+  --color-primary-dark: #C41A1F;
+  --color-secondary: #0066CC;
+  --color-secondary-light: #3385D6;
+  --color-secondary-dark: #0052A3;
+  --color-background: #FFFFFF;
+  --color-background-dark: #0A0E27;
+  --color-background-light: #F5F5F5;
+  --color-text: #1C1C1C;
+  --color-text-muted: #666666;
+  --color-text-light: #999999;
+  
+  /* Legacy colors */
+  --color-charcoal: #08090A;
+  --color-lightblack: #1C1C1C;
+  
+  /* Font family */
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Custom font sizes - using proper v4 syntax */
+  --font-size-hero: 3rem;
+  --font-size-display: 2.5rem;
+  
+  /* Custom spacing */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  --spacing-128: 32rem;
+  
+  /* Custom box shadows */
+  --shadow-derek: 0px 0px 0px 1px rgb(0 0 0 / 0.06),
+    0px 1px 1px -0.5px rgb(0 0 0 / 0.06),
+    0px 3px 3px -1.5px rgb(0 0 0 / 0.06), 
+    0px 6px 6px -3px rgb(0 0 0 / 0.06),
+    0px 12px 12px -6px rgb(0 0 0 / 0.06),
+    0px 24px 24px -12px rgb(0 0 0 / 0.06);
+  
+  --shadow-aceternity: 0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08);
+  
+  /* Custom animations */
+  --animate-move: move 5s linear infinite;
+  --animate-spin-circle: spin-circle 3s linear infinite;
+  
+  /* Background images */
+  --gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
 }
 
-@media (prefers-color-scheme: dark) {
+@keyframes move {
+  0% { transform: translateX(-200px); }
+  100% { transform: translateX(200px); }
+}
+
+@keyframes spin-circle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
+    --primary: #dc3044;
+    --primary-light: #E31E24;
+    --primary-dark: #C41A1F;
+    --secondary: #0066CC;
+    --secondary-light: #3385D6;
+    --secondary-dark: #0052A3;
+    --background: #FFFFFF;
+    --background-dark: #0A0E27;
+    --background-light: #F5F5F5;
+    --text: #1C1C1C;
+    --text-muted: #666666;
+    --text-light: #999999;
+  }
+
+  body {
+    @apply bg-background text-text;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    @apply text-text;
+  }
+
+  h1 {
+    font-size: var(--font-size-hero);
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: var(--font-size-display);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  h3 {
+    @apply text-3xl;
+  }
+
+  h4 {
+    @apply text-2xl;
+  }
+
+  h5 {
+    @apply text-xl;
+  }
+
+  h6 {
+    @apply text-lg;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-}
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white font-semibold px-6 py-3 rounded-lg;
+    @apply hover:bg-primary-dark transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .btn-secondary {
+    @apply bg-secondary text-white font-semibold px-6 py-3 rounded-lg;
+    @apply hover:bg-secondary-dark transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary font-semibold px-6 py-3 rounded-lg;
+    @apply hover:bg-primary hover:text-white transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6;
+    @apply hover:shadow-lg transition-shadow duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+    @apply transition-all duration-200;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-primary/10 text-primary;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary/10 text-secondary;
   }
 }

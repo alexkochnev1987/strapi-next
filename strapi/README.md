@@ -1,61 +1,113 @@
-# 🚀 Getting started with Strapi
+# Dashboard API - Strapi Backend
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+A simplified Strapi backend API for managing leads in a dashboard application.
 
-### `develop`
+## Getting Started
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+### Prerequisites
 
-```
-npm run develop
+- Node.js >= 18.0.0
+- npm >= 6.0.0 or yarn
+
+### Installation
+
+Install dependencies:
+
+```bash
+yarn install
 # or
+npm install
+```
+
+### Development
+
+Start Strapi in development mode with auto-reload:
+
+```bash
 yarn develop
-```
-
-### `start`
-
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
-
-```
-npm run start
 # or
-yarn start
+npm run develop
 ```
 
-### `build`
+The admin panel will be available at `http://localhost:1337/admin`
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+### Production
 
-```
-npm run build
-# or
+Build and start the production server:
+
+```bash
 yarn build
+yarn start
+# or
+npm run build
+npm start
 ```
 
-## ⚙️ Deployment
+## API Endpoints
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+The API provides REST endpoints for managing leads:
+
+- `GET /api/leads` - Get all leads (supports filtering by status)
+- `GET /api/leads/:id` - Get a specific lead
+- `POST /api/leads` - Create a new lead
+- `PUT /api/leads/:id` - Update a lead
+- `DELETE /api/leads/:id` - Delete a lead
+
+### Example Requests
+
+**Get all active leads:**
 
 ```
-yarn strapi deploy
+GET /api/leads?filters[status][$eq]=Active
 ```
 
-## 📚 Learn more
+**Create a new lead:**
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+```
+POST /api/leads
+Content-Type: application/json
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+{
+  "data": {
+    "name": "John Doe",
+    "company": "Acme Corp",
+    "email": "john@acme.com",
+    "status": "Active"
+  }
+}
+```
 
-## ✨ Community
+**Update a lead:**
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+```
+PUT /api/leads/1
+Content-Type: application/json
 
----
+{
+  "data": {
+    "status": "Inactive"
+  }
+}
+```
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+## Lead Schema
+
+- `name` (string, required) - Lead's name
+- `company` (string, required) - Company name
+- `email` (email, required, unique) - Email address
+- `status` (enum, required) - Status: "Active" or "Inactive" (default: "Active")
+
+## Authentication
+
+Authentication is handled through the `users-permissions` plugin. Create users through the admin panel at `/admin`.
+
+## Database
+
+By default, the project uses SQLite for development. The database file is stored at `.tmp/data.db`.
+
+To use PostgreSQL or MySQL in production, update the `DATABASE_CLIENT` environment variable in your `.env` file.
+
+## Learn More
+
+- [Strapi Documentation](https://docs.strapi.io)
+- [Strapi API Documentation](https://docs.strapi.io/dev-docs/api/rest)
